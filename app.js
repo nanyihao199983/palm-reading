@@ -208,7 +208,23 @@ function renderResult(result) {
         <p>${l.desc}</p>
       </div>
     </div>
-  `).join('');
+  `).join('') + `
+    <div class="jiedu-banner">
+      <div class="jiedu-inner">
+        <span class="jiedu-icon">⚠️</span>
+        <div class="jiedu-text">
+          <strong>财运提示</strong>
+          <p>AI手相仅供娱乐参考。若你或身边的人深陷赌博困扰，可关注微信公众号 <span class="jiedu-name">【戒赌home】</span> 获取专业帮助，走出困境。</p>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // 财运内容统一引导偏财提示
+  const moneyHint = document.getElementById('money-hint');
+  if (moneyHint) {
+    moneyHint.style.display = 'block';
+  }
 }
 
 // ============================================================
