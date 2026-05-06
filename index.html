@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>AI神算·手相运势</title>
+  <meta name="description" content="上传手掌照片，AI为你解读命运密码" />
+  <!-- 微信分享 meta -->
+  <meta property="og:title" content="AI神算·手相运势" />
+  <meta property="og:description" content="我刚测了手相，运势超准的！快来试试👇" />
+  <meta property="og:image" content="https://your-domain.com/share-cover.jpg" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ========== 页面 1：欢迎页 ========== -->
+<div id="page-welcome" class="page">
+  <div class="stars"></div>
+  <div class="welcome-content">
+    <div class="logo-wrap">
+      <div class="palm-icon">🤚</div>
+      <div class="glow-ring"></div>
+    </div>
+    <h1 class="app-title">AI神算</h1>
+    <p class="app-sub">手相·命运·运势</p>
+    <div class="divider"></div>
+    <p class="welcome-desc">
+      千年东方面相学<br/>
+      结合 <span class="highlight">AI深度分析</span><br/>
+      解读你掌纹里的命运密码
+    </p>
+    <div class="stats-row">
+      <div class="stat"><span class="num">2,847,391</span><span class="label">次分析</span></div>
+      <div class="stat"><span class="num">98.6%</span><span class="label">准确好评</span></div>
+    </div>
+    <button class="btn-primary" onclick="goPage('page-upload')">
+      ✨ 开始手相分析
+    </button>
+    <p class="tip-small">免费 · 1分钟出结果 · 私密安全</p>
+  </div>
+</div>
+
+<!-- ========== 页面 2：上传拍照 ========== -->
+<div id="page-upload" class="page active">
+  <div class="upload-top-header">
+    <div class="app-logo">🤚</div>
+    <h1 class="app-name">AI神算·手相运势</h1>
+    <p class="app-tagline">拍下你的手掌，AI为你解读命运密码</p>
+  </div>
+
+  <div class="upload-area" id="upload-area">
+    <div id="upload-placeholder">
+      <div class="upload-icon">📷</div>
+      <p class="upload-hint-main">拍摄或上传你的手掌</p>
+      <p class="upload-hint-sub">请展开手掌，光线充足，拍摄整个手心</p>
+      <button class="btn-upload" onclick="document.getElementById('file-input').click()">
+        📸 拍照上传
+      </button>
+    </div>
+    <img id="preview-img" src="" alt="手掌预览" style="display:none"/>
+    <input type="file" id="file-input" accept="image/*" capture="environment" style="display:none" onchange="handleImageUpload(event)" />
+  </div>
+
+  <!-- 使用说明 -->
+  <div class="guide-card">
+    <h3>📋 拍摄指南（效果更准）</h3>
+    <div class="guide-items">
+      <div class="guide-item">✅ 展开手掌，五指并拢或微张</div>
+      <div class="guide-item">✅ 光线明亮，避免阴影遮挡</div>
+      <div class="guide-item">✅ 拍摄惯用手（右手为主）</div>
+      <div class="guide-item">❌ 避免手指弯曲或握拳</div>
+    </div>
+  </div>
+
+  <div id="analyze-section" style="display:none">
+    <div class="selected-info">✅ 已选择图片，点击下方开始分析</div>
+    <button class="btn-primary" onclick="startAnalysis()">
+      🔮 开始AI分析
+    </button>
+  </div>
+</div>
+
+<!-- ========== 页面 3：分析中 ========== -->
+<div id="page-loading" class="page">
+  <div class="loading-content">
+    <div class="palm-scan-wrap">
+      <div class="hand-preview-wrap">
+        <img id="loading-img" src="" alt="" class="hand-thumb"/>
+      </div>
+      <div class="scan-line"></div>
+    </div>
+    <h2 class="loading-title">AI正在解读你的掌纹</h2>
+    <div class="loading-steps" id="loading-steps">
+      <div class="step" id="step1">🔍 识别手掌轮廓...</div>
+      <div class="step" id="step2">📊 分析主要掌纹...</div>
+      <div class="step" id="step3">🧬 计算命运走向...</div>
+      <div class="step" id="step4">💫 生成专属报告...</div>
+    </div>
+    <div class="loading-bar-wrap">
+      <div class="loading-bar" id="loading-bar"></div>
+    </div>
+    <p class="loading-pct" id="loading-pct">0%</p>
+  </div>
+</div>
+
+<!-- ========== 页面 4：解锁（必须转发）========== -->
+<div id="page-unlock" class="page">
+  <div class="unlock-header">
+    <div class="lock-icon">🔒</div>
+    <h2>你的手相报告已生成</h2>
+    <p class="unlock-sub">分享给好友即可查看完整结果</p>
+  </div>
+
+  <!-- 结果预览模糊区域 -->
+  <div class="result-blur-wrap">
+    <div class="blur-overlay">
+      <div class="blur-msg">
+        <span class="blur-lock">🔮</span>
+        <p>完整报告已加密</p>
+        <p class="blur-sub">转发3个群组后解锁</p>
+      </div>
+    </div>
+    <div class="result-preview">
+      <div class="preview-row"><span class="label">感情线</span><span class="val blurred">██████████</span></div>
+      <div class="preview-row"><span class="label">事业线</span><span class="val blurred">████████</span></div>
+      <div class="preview-row"><span class="label">生命线</span><span class="val blurred">█████████████</span></div>
+      <div class="preview-row"><span class="label">财运走势</span><span class="val blurred">██████████████</span></div>
+      <div class="preview-row"><span class="label">近期运势</span><span class="val blurred">████████████</span></div>
+    </div>
+  </div>
+
+  <!-- 转发引导 -->
+  <div class="share-card">
+    <h3>📤 解锁完整手相报告</h3>
+    <p class="share-desc">将本页面转发至 <strong>3个微信群组</strong>，即可立即解锁你的命运报告</p>
+    
+    <div class="share-steps">
+      <div class="share-step" id="share-step-1">
+        <div class="step-circle" id="circle-1">1</div>
+        <div class="step-text">
+          <strong>点击右上角 ···</strong>
+          <p>选择"转发给朋友"或"分享到群"</p>
+        </div>
+        <div class="step-check" id="check-1">✓</div>
+      </div>
+      <div class="share-step" id="share-step-2">
+        <div class="step-circle" id="circle-2">2</div>
+        <div class="step-text">
+          <strong>已转发 <span id="share-count">0</span>/3 个群组</strong>
+          <p>每转发一个群组点击确认</p>
+        </div>
+        <div class="step-check" id="check-2">✓</div>
+      </div>
+    </div>
+
+    <button class="btn-share" onclick="confirmShare()">
+      ✅ 我已转发一个群组（<span id="btn-count">0</span>/3）
+    </button>
+
+    <div class="share-progress">
+      <div class="share-dot" id="dot-1"></div>
+      <div class="share-dot" id="dot-2"></div>
+      <div class="share-dot" id="dot-3"></div>
+    </div>
+    <p class="share-tip">转发后请点击上方按钮确认，累计3次即可解锁</p>
+  </div>
+
+  <!-- 微信分享提示弹层 -->
+  <div id="wechat-share-guide" class="wechat-guide" style="display:none">
+    <div class="guide-arrow">↗</div>
+    <div class="guide-text">点击右上角 <strong>···</strong><br/>选择「转发给朋友」或「分享到群」</div>
+  </div>
+</div>
+
+<!-- ========== 页面 5：完整结果 ========== -->
+<div id="page-result" class="page">
+  <div class="result-header">
+    <div class="result-palm-icon">🤚</div>
+    <h2>你的专属手相报告</h2>
+    <p class="result-date" id="result-date"></p>
+  </div>
+
+  <!-- 总体运势 -->
+  <div class="result-card overall-card">
+    <div class="card-header">
+      <span class="card-icon">⭐</span>
+      <span class="card-title">综合运势评分</span>
+    </div>
+    <div class="score-display">
+      <div class="score-circle" id="score-circle">
+        <span class="score-num" id="score-num">--</span>
+        <span class="score-unit">分</span>
+      </div>
+      <div class="score-bars">
+        <div class="score-bar-row"><span>感情</span><div class="bar"><div class="bar-fill love" id="bar-love"></div></div><span id="txt-love">--</span></div>
+        <div class="score-bar-row"><span>事业</span><div class="bar"><div class="bar-fill career" id="bar-career"></div></div><span id="txt-career">--</span></div>
+        <div class="score-bar-row"><span>财运</span><div class="bar"><div class="bar-fill money" id="bar-money"></div></div><span id="txt-money">--</span></div>
+        <div class="score-bar-row"><span>健康</span><div class="bar"><div class="bar-fill health" id="bar-health"></div></div><span id="txt-health">--</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 掌纹解读 -->
+  <div class="result-card">
+    <div class="card-header">
+      <span class="card-icon">✋</span>
+      <span class="card-title">掌纹详细解读</span>
+    </div>
+    <div class="palm-lines" id="palm-lines-content"></div>
+  </div>
+
+  <!-- 近期运势 -->
+  <div class="result-card">
+    <div class="card-header">
+      <span class="card-icon">📅</span>
+      <span class="card-title">近期运势预测</span>
+    </div>
+    <div id="fortune-content" class="fortune-text"></div>
+  </div>
+
+  <!-- 开运建议 -->
+  <div class="result-card lucky-card">
+    <div class="card-header">
+      <span class="card-icon">🍀</span>
+      <span class="card-title">专属开运建议</span>
+    </div>
+    <div id="lucky-content"></div>
+  </div>
+
+  <!-- 计算器入口（变现） -->
+  <div class="result-card calculator-card" onclick="goPage('page-calculator')">
+    <div class="calc-teaser">
+      <span class="calc-icon">🧮</span>
+      <div>
+        <strong>命理数字计算器</strong>
+        <p>根据你的手相数据计算命理数字</p>
+      </div>
+      <span class="calc-arrow">›</span>
+    </div>
+  </div>
+
+  <button class="btn-secondary" onclick="goPage('page-upload')">
+    🔄 重新分析
+  </button>
+  <button class="btn-share-result" onclick="showShareGuide()">
+    📤 分享给朋友
+  </button>
+</div>
+
+<!-- ========== 页面 6：计算器 ========== -->
+<div id="page-calculator" class="page">
+  <div class="top-bar">
+    <span class="back" onclick="goPage('page-result')">‹ 返回</span>
+    <span class="title">命理数字计算器</span>
+    <span></span>
+  </div>
+  <div class="calc-wrap">
+    <div class="calc-screen" id="calc-screen">0</div>
+    <div class="calc-subscreen" id="calc-sub"></div>
+    <div class="calc-grid">
+      <button class="calc-btn func" onclick="calcAction('clear')">AC</button>
+      <button class="calc-btn func" onclick="calcAction('plusminus')">+/-</button>
+      <button class="calc-btn func" onclick="calcAction('percent')">%</button>
+      <button class="calc-btn op" onclick="calcAction('op', '÷')">÷</button>
+
+      <button class="calc-btn num" onclick="calcAction('num','7')">7</button>
+      <button class="calc-btn num" onclick="calcAction('num','8')">8</button>
+      <button class="calc-btn num" onclick="calcAction('num','9')">9</button>
+      <button class="calc-btn op" onclick="calcAction('op','×')">×</button>
+
+      <button class="calc-btn num" onclick="calcAction('num','4')">4</button>
+      <button class="calc-btn num" onclick="calcAction('num','5')">5</button>
+      <button class="calc-btn num" onclick="calcAction('num','6')">6</button>
+      <button class="calc-btn op" onclick="calcAction('op','−')">−</button>
+
+      <button class="calc-btn num" onclick="calcAction('num','1')">1</button>
+      <button class="calc-btn num" onclick="calcAction('num','2')">2</button>
+      <button class="calc-btn num" onclick="calcAction('num','3')">3</button>
+      <button class="calc-btn op" onclick="calcAction('op','+')">+</button>
+
+      <button class="calc-btn num zero" onclick="calcAction('num','0')">0</button>
+      <button class="calc-btn num" onclick="calcAction('dot')">.</button>
+      <button class="calc-btn op equal" onclick="calcAction('equal')">=</button>
+    </div>
+    <div class="calc-mingli-hint">
+      <p>💡 将你的出生年月日相加可得命理数字</p>
+      <p>例：1990/05/18 → 1+9+9+0+0+5+1+8 = <strong>33</strong> → 3+3 = <strong>6</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast" style="display:none"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
